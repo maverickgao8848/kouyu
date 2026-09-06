@@ -44,7 +44,7 @@ def load_state(data_dir: Path) -> dict:
         state = empty_state()
         atomic_json(path, state)
         return state
-    with path.open(encoding="utf-8") as handle:
+    with path.open(encoding="utf-8-sig") as handle:
         state = json.load(handle)
     validate_state(state)
     return state
@@ -122,7 +122,7 @@ def init_workbench(data_dir: Path) -> None:
 
 
 def archive_session(data_dir: Path, input_path: Path) -> None:
-    with input_path.open(encoding="utf-8") as handle:
+    with input_path.open(encoding="utf-8-sig") as handle:
         session = json.load(handle)
     validate_session(session)
     state = load_state(data_dir)
@@ -166,14 +166,18 @@ def make_handler(data_dir: Path, static_dir: Path):
             super().do_GET()
 
         def do_PUT(self):
-            if urlparse(self.path).path != "/api/state":
+            if urlparse(self.path).path != "/api/preferences":
                 self.send_error(404)
                 return
             try:
                 length = int(self.headers.get("Content-Length", "0"))
                 if length <= 0 or length > MAX_BODY:
                     raise ValueError("invalid request size")
-                state = json.loads(self.rfile.read(length).decode("utf-8"))
+                preferences = json.loads(self.rfile.read(length).decode("utf-8"))
+                require(preferences, dict, "preferences")
+                # Read current sessions instead of accepting a stale browser snapshot.
+                state = load_state(data_dir)
+                state["preferences"] = preferences
                 save_state(data_dir, state)
                 self.send_json({"ok": True})
             except (ValueError, json.JSONDecodeError) as error:

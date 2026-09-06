@@ -193,7 +193,7 @@ async function loadState() {
 
 async function saveState() {
   try {
-    const response = await fetch("/api/state", { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(state) });
+    const response = await fetch("/api/preferences", { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(state.preferences) });
     if (!response.ok) throw new Error("save failed");
     $("#save-status").textContent = "选择已保存";
   } catch { $("#save-status").textContent = "预览模式 · 选择未存档"; }
@@ -203,7 +203,7 @@ function switchView(view) {
   $$(".view").forEach(item => item.classList.toggle("active", item.id === `${view}-view`));
   $$(".nav-item").forEach(item => item.classList.toggle("active", item.dataset.view === view));
   history.replaceState(null, "", `#${view}`);
-  if (view === "review") renderReview();
+  if (view === "review") loadState();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -219,7 +219,7 @@ function renderReview() {
   $("#empty-review").classList.toggle("hidden", sessions.length > 0);
   const grouped = sessions.reduce((map, session) => {
     const key = session.topic?.id || "other"; (map[key] ||= []).push(session); return map;
-  }, {});
+  }, Object.create(null));
   $("#review-list").innerHTML = Object.values(grouped).map(items => {
     const latest = items[0]; const allTargets = items.flatMap(item => item.targets || []);
     const done = allTargets.filter(target => target.status === "mastered").length;

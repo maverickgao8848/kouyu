@@ -8,3 +8,5 @@ Thumbs.db
 english-speaking-workbench/
 workbench-data.json
 sessions/
+session-*.json
+test-workbench/

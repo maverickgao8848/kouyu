@@ -18,6 +18,8 @@
 
 ## 安装
 
+需要 **Python 3.10+**（仅标准库，无需 pip / Node.js / API Key）、Git，以及能加载本地 Skill 并执行脚本的客户端。网页本身负责配置练习和查看归档；不会直接发起 AI 对话或语音通话。普通聊天页面不能仅通过输入 `$kouyu` 读取本机 Skill 和保存本地记录。
+
 把仓库克隆到 Codex 的 Skills 目录：
 
 ```bash
@@ -25,6 +27,14 @@ git clone https://github.com/maverickgao8848/kouyu.git ~/.codex/skills/kouyu
 ```
 
 重新打开 Codex 后即可使用。也可以把本仓库的完整目录复制到你所使用客户端的 Skills 目录中。
+
+Windows PowerShell：
+
+```powershell
+git clone https://github.com/maverickgao8848/kouyu.git "$env:USERPROFILE/.codex/skills/kouyu"
+```
+
+如已安装，不要重复克隆；在安装目录运行 `git pull --ff-only` 更新。若配置了自定义 Skills 目录，请相应替换路径。
 
 ## 开始练习
 
@@ -41,6 +51,22 @@ Skill 会先生成预习卡。准备好后说 **“I'm ready.”** 开始角色�
 
 ## 本地复习台
 
+以下相对路径命令均在仓库根目录（包含 `SKILL.md` 的目录）执行。`serve` 会自动初始化空工作台，可以直接启动：
+
+```bash
+python scripts/workbench.py serve --data-dir english-speaking-workbench
+```
+
+Windows 安装后可从任意目录启动，并固定使用同一份数据：
+
+```powershell
+python "$env:USERPROFILE/.codex/skills/kouyu/scripts/workbench.py" serve --data-dir "$env:USERPROFILE/english-speaking-workbench"
+```
+
+默认地址是 **http://127.0.0.1:8765/**。保持终端运行，按 `Ctrl+C` 停止。选择主题、时长和辅助模式，点击复制指令，再粘贴到已加载 Skill 的客户端。归档时使用相同的 `--data-dir`；切换“我的复习台”会重新读取最新记录。
+
+### 归档与数据
+
 初始化数据目录：
 
 ```bash
@@ -50,18 +76,18 @@ python scripts/workbench.py init --data-dir english-speaking-workbench
 归档一次训练：
 
 ```bash
-python scripts/workbench.py archive \
-  --input path/to/session.json \
-  --data-dir english-speaking-workbench
+python scripts/workbench.py archive --input path/to/session.json --data-dir english-speaking-workbench
 ```
 
-启动网页复习台：
+Session 格式见 [数据规范](references/workbench-data.md)。数据只写入你指定的目录，不会上传到远端。备份时复制整个数据目录；同一份数据请避免同时运行多个写入进程。
 
-```bash
-python scripts/workbench.py serve --data-dir english-speaking-workbench
-```
+### 打不开时
 
-浏览器会打开本地页面。数据只写入你指定的目录，不会上传到远端。
+- 找不到 `python`：先安装 Python 3.10+；Windows 也可把命令中的 `python` 换成 `py -3`。
+- 8765 端口被占用：追加 `--port 8766`，打开终端输出的新地址。
+- 浏览器没有自动弹出：手动打开终端输出的地址；也可用 `--no-open` 禁用自动打开。
+- 显示“预览模式”：通过 Python 服务的 HTTP 地址访问，直接双击 HTML 不能连接归档。
+- 看不到已有记录：确认启动与归档使用同一个数据目录。默认相对路径取决于运行命令时所在的目录。
 
 ## 项目结构
 
@@ -72,7 +98,7 @@ python scripts/workbench.py serve --data-dir english-speaking-workbench
 ├── references/                # 课程设计、会话、报告和数据规范
 ├── scripts/workbench.py        # 本地归档与网页服务
 ├── assets/workbench/           # 复习台前端
-└── tests/test_workbench.py     # 数据归档测试
+└── tests/test_workbench.py     # 归档、HTTP 服务和记录保护测试
 ```
 
 ## 测试
