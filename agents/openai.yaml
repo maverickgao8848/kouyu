@@ -1,0 +1,6 @@
+interface:
+  display_name: "口语练习台"
+  short_description: "Guided English role-play, gentle correction, and review"
+  default_prompt: "Use $kouyu to start a 20-minute guided English speaking session."
+policy:
+  allow_implicit_invocation: true
