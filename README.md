@@ -100,14 +100,7 @@ Session 格式见 [数据规范](references/workbench-data.md)。数据只写入
 ├── curriculum/                # 英语课程来源范围与登记信息
 ├── references/                # 课程设计、会话、报告和数据规范
 ├── scripts/workbench.py        # 本地归档与网页服务
-├── assets/workbench/           # 复习台前端
-└── tests/test_workbench.py     # 归档、HTTP 服务和记录保护测试
-```
-
-## 测试
-
-```bash
-python -m unittest discover -s tests -v
+└── assets/workbench/           # 复习台前端
 ```
 
 ## 隐私
