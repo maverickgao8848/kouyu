@@ -75,6 +75,19 @@ def validate_session(session: dict) -> None:
             raise ValueError(f"targets[{index}].status is invalid")
         if target.get("support", "none") not in ALLOWED_SUPPORT:
             raise ValueError(f"targets[{index}].support is invalid")
+    repairs = session.get("repairs", [])
+    require(repairs, list, "repairs")
+    for index, repair in enumerate(repairs):
+        require(repair, dict, f"repairs[{index}]")
+        require(repair.get("learner"), str, f"repairs[{index}].learner")
+        require(repair.get("natural"), str, f"repairs[{index}].natural")
+        require(repair.get("reason_zh"), str, f"repairs[{index}].reason_zh")
+    focus_next = session.get("focus_next", [])
+    require(focus_next, list, "focus_next")
+    if not all(isinstance(item, str) and item.strip() for item in focus_next):
+        raise ValueError("focus_next must contain non-empty strings")
+    if "next_drill" in session:
+        require(session["next_drill"], str, "next_drill")
 
 
 def validate_state(state: dict) -> None:
@@ -82,6 +95,30 @@ def validate_state(state: dict) -> None:
     require(state.get("sessions"), list, "sessions")
     for session in state["sessions"]:
         validate_session(session)
+
+
+def latest_targets(items: list[dict]) -> list[dict]:
+    latest: dict[str, dict] = {}
+    for session in items:
+        for target in session.get("targets", []):
+            expression = target.get("expression", "").strip()
+            if expression and expression not in latest:
+                latest[expression] = target
+    return list(latest.values())
+
+
+def recent_repairs(items: list[dict], limit: int = 3) -> list[dict]:
+    seen: set[tuple[str, str]] = set()
+    result: list[dict] = []
+    for session in items:
+        for repair in session.get("repairs", []):
+            key = (repair.get("learner", ""), repair.get("natural", ""))
+            if key not in seen:
+                seen.add(key)
+                result.append(repair)
+                if len(result) == limit:
+                    return result
+    return result
 
 
 def render_dashboard(state: dict) -> str:
@@ -94,14 +131,25 @@ def render_dashboard(state: dict) -> str:
     if not sessions:
         lines += ["还没有练习记录。完成第一次场景对话后，这里会自动生成复习内容。", ""]
     for topic, items in grouped.items():
-        targets = [target for item in items for target in item.get("targets", [])]
+        targets = latest_targets(items)
         mastered = sum(target.get("status") == "mastered" for target in targets)
-        review = [target.get("expression", "") for target in targets if target.get("status") == "needs_review"]
+        review = [target.get("expression", "") for target in targets if target.get("status") in {"developing", "needs_review"}]
+        repairs = recent_repairs(items)
+        latest = items[0]
         lines += [f"## {items[0]['topic'].get('emoji', '💬')} {topic}", ""]
         lines += [f"- 练习次数：{len(items)}", f"- 已掌握表达：{mastered}/{len(targets)}", f"- 最近练习：{items[0].get('created_at', '')}"]
         if review:
             unique = list(dict.fromkeys(filter(None, review)))[:5]
             lines.append(f"- 下次复习：{'、'.join(unique)}")
+        focus_next = [item for item in latest.get("focus_next", []) if item][:3]
+        if focus_next:
+            lines.append(f"- 下次重点：{'、'.join(focus_next)}")
+        if latest.get("next_drill"):
+            lines.append(f"- 迁移练习：{latest['next_drill']}")
+        if repairs:
+            lines += ["", "### 重点纠正", ""]
+            for repair in repairs:
+                lines.append(f"- `{repair['learner']}` → `{repair['natural']}`：{repair['reason_zh']}")
         lines.append("")
     lines += ["---", "", f"更新时间：{datetime.now().astimezone().isoformat(timespec='seconds')}", ""]
     return "\n".join(lines)
@@ -215,11 +263,11 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", required=True)
     for command in ("init", "archive"):
         sub = subparsers.add_parser(command)
-        sub.add_argument("--data-dir", type=Path, default=Path.cwd() / "english-speaking-workbench")
+        sub.add_argument("--data-dir", type=Path, default=Path.home() / "english-speaking-workbench")
         if command == "archive":
             sub.add_argument("--input", type=Path, required=True)
     sub = subparsers.add_parser("serve")
-    sub.add_argument("--data-dir", type=Path, default=Path.cwd() / "english-speaking-workbench")
+    sub.add_argument("--data-dir", type=Path, default=Path.home() / "english-speaking-workbench")
     sub.add_argument("--host", default="127.0.0.1")
     sub.add_argument("--port", type=int, default=8765)
     sub.add_argument("--no-open", action="store_true")

@@ -1,8 +1,8 @@
 # 口语练习台（Kouyu）
 
-一个面向 Codex / ChatGPT 的英语口语陪练 Skill：先生成场景化预习卡，再进入角色扮演，过程中提供渐进式中文提示和轻量纠错，结束后把学习记录保存到本地复习台。
+一个面向 Codex / ChatGPT 的英语口语陪练 Skill：在对话里确定主题并完成场景化训练，过程中提供渐进式中文提示和轻量纠错，结束后自动整理真实表现、纠正和下一步，并保存到本地复习台。
 
-![口语练习台首页](docs/screenshots/practice.png)
+![英语复习台总览](docs/screenshots/practice.png)
 
 ## 能做什么
 
@@ -20,7 +20,7 @@
 
 ## 安装
 
-需要 **Python 3.10+**（仅标准库，无需 pip / Node.js / API Key）、Git，以及能加载本地 Skill 并执行脚本的客户端。网页本身负责配置练习和查看归档；不会直接发起 AI 对话或语音通话。普通聊天页面不能仅通过输入 `$kouyu` 读取本机 Skill 和保存本地记录。
+需要 **Python 3.10+**（仅标准库，无需 pip / Node.js / API Key）、Git，以及能加载本地 Skill 并执行脚本的客户端。主题、时长和辅助方式都在对话中确定；网页只负责查看归档、纠正和复练安排，不会直接发起 AI 对话或语音通话。普通聊天页面不能仅通过输入 `$kouyu` 读取本机 Skill 和保存本地记录。
 
 把仓库克隆到 Codex 的 Skills 目录：
 
@@ -56,32 +56,34 @@ Skill 会先生成预习卡。准备好后说 **“I'm ready.”** 开始角色�
 以下相对路径命令均在仓库根目录（包含 `SKILL.md` 的目录）执行。`serve` 会自动初始化空工作台，可以直接启动：
 
 ```bash
-python scripts/workbench.py serve --data-dir english-speaking-workbench
+python scripts/workbench.py serve
 ```
 
 Windows 安装后可从任意目录启动，并固定使用同一份数据：
 
 ```powershell
-python "$env:USERPROFILE/.codex/skills/kouyu/scripts/workbench.py" serve --data-dir "$env:USERPROFILE/english-speaking-workbench"
+python "$env:USERPROFILE/.codex/skills/kouyu/scripts/workbench.py" serve
 ```
 
-默认地址是 **http://127.0.0.1:8765/**。保持终端运行，按 `Ctrl+C` 停止。选择主题、时长和辅助模式，点击复制指令，再粘贴到已加载 Skill 的客户端。归档时使用相同的 `--data-dir`；切换“我的复习台”会重新读取最新记录。
+默认地址是 **http://127.0.0.1:8765/**。保持终端运行，按 `Ctrl+C` 停止。工作台不会再次要求选择主题；它只展示对话结束后自动归档的当前掌握度、原句与自然改法、下次重点和迁移练习，并会定时刷新。
+
+默认数据目录固定为用户主目录下的 `english-speaking-workbench`，因此无论从哪个文件夹启动，归档与网页都会读取同一份历史。只有想更换存放位置时，才需要给 `archive` 和 `serve` 同时传入相同的 `--data-dir`。
 
 ### 归档与数据
 
 初始化数据目录：
 
 ```bash
-python scripts/workbench.py init --data-dir english-speaking-workbench
+python scripts/workbench.py init
 ```
 
 归档一次训练：
 
 ```bash
-python scripts/workbench.py archive --input path/to/session.json --data-dir english-speaking-workbench
+python scripts/workbench.py archive --input path/to/session.json
 ```
 
-Session 格式见 [数据规范](references/workbench-data.md)。数据只写入你指定的目录，不会上传到远端。备份时复制整个数据目录；同一份数据请避免同时运行多个写入进程。
+Session 格式见 [数据规范](references/workbench-data.md)。正常练习结束时 Skill 会根据本次对话直接执行归档，不需要学习者手工维护 JSON。数据只写入本机，不会上传到远端；备份时复制整个数据目录。
 
 ### 打不开时
 
@@ -89,7 +91,7 @@ Session 格式见 [数据规范](references/workbench-data.md)。数据只写入
 - 8765 端口被占用：追加 `--port 8766`，打开终端输出的新地址。
 - 浏览器没有自动弹出：手动打开终端输出的地址；也可用 `--no-open` 禁用自动打开。
 - 显示“预览模式”：通过 Python 服务的 HTTP 地址访问，直接双击 HTML 不能连接归档。
-- 看不到已有记录：确认启动与归档使用同一个数据目录。默认相对路径取决于运行命令时所在的目录。
+- 看不到已有记录：如果使用过 `--data-dir`，确认启动与归档传入的是同一个绝对目录；未传时两者都会使用用户主目录下的默认目录。
 
 ## 项目结构
 
@@ -105,4 +107,4 @@ Session 格式见 [数据规范](references/workbench-data.md)。数据只写入
 
 ## 隐私
 
-口语训练记录默认保存在本地 `english-speaking-workbench` 目录。仓库不包含个人练习数据，提交前也请确认不要把自己的 session JSON 推送到公开仓库。
+口语训练记录默认保存在用户主目录下的 `english-speaking-workbench`。仓库不包含个人练习数据，提交前也请确认不要把自己的 session JSON 推送到公开仓库。

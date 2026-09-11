@@ -4,118 +4,58 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f8efda">
-  <title>Say! 口语练习台</title>
+  <title>Say! 口语复习台</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="paper-noise" aria-hidden="true"></div>
   <div class="shell">
     <aside class="sidebar">
-      <a class="brand" href="#practice" aria-label="口语练习台首页">
+      <a class="brand" href="#review" aria-label="口语复习台首页">
         <span class="brand-bubble">Say!</span>
-        <span><b>口语练习台</b><small>Speak a little, every day.</small></span>
+        <span><b>口语复习台</b><small>Review a little, grow every day.</small></span>
       </a>
-
       <nav class="nav" aria-label="主导航">
-        <button class="nav-item active" data-view="practice"><span>✦</span> 今天练什么</button>
-        <button class="nav-item" data-view="review"><span>⌁</span> 我的复习台</button>
+        <div class="nav-item active" aria-current="page"><span>⌁</span> 我的复习台</div>
       </nav>
-
       <div class="streak-note">
-        <span class="tape"></span>
-        <span class="doodle">☀</span>
+        <span class="tape"></span><span class="doodle">☀</span>
         <b id="session-count">从第 1 次开始</b>
-        <p>开口不用完美，<br>只需要比昨天多一点。</p>
+        <p>不是只看说了什么，<br>还要知道下次练什么。</p>
       </div>
-      <p class="local-note">◌ 数据只保存在你的本地工作台</p>
+      <p class="local-note">◌ 练习记录只保存在本地</p>
     </aside>
 
     <main>
       <header class="topbar">
-        <div><span class="eyebrow">YOUR POCKET SPEAKING CLUB</span></div>
-        <div class="status-pill"><i></i><span id="save-status">本地工作台已连接</span></div>
+        <span class="eyebrow">YOUR SPEAKING TRAIL</span>
+        <div class="status-pill"><i></i><span id="save-status">正在读取本地存档…</span></div>
       </header>
 
-      <section id="practice-view" class="view active">
-        <div class="hero">
-          <div>
-            <span class="scribble-label">今天的 20 分钟，也算数 ♡</span>
-            <h1>把一段生活，<br><em>慢慢说顺。</em></h1>
-            <p>选一个会真实发生的场景。复制练习指令，让 ChatGPT 生成预习卡并陪你演一遍。</p>
-          </div>
-          <svg class="hero-doodle" viewBox="0 0 280 200" role="img" aria-label="两位朋友练习对话的手绘插图">
-            <path d="M26 154c46-12 178-11 227 2" class="ink-line"/>
-            <path d="M58 75c-20-22 0-54 29-50 25 3 34 35 17 53-12 13-36 13-46-3z" class="fill-yellow"/>
-            <circle cx="78" cy="49" r="2.5"/><circle cx="91" cy="50" r="2.5"/>
-            <path d="M79 62c6 4 12 3 16-1M63 31c12-13 34-11 44 2M74 88c-13 14-18 36-12 62M98 87c14 17 18 39 12 64M66 105l-28 19M105 105l25 20" class="ink-line"/>
-            <path d="M155 82c-16-25 5-54 35-45 24 7 28 38 8 54-14 11-34 7-43-9z" class="fill-pink"/>
-            <circle cx="173" cy="59" r="2.5"/><circle cx="187" cy="61" r="2.5"/>
-            <path d="M173 72c6 4 12 4 16 0M158 45c12-14 33-12 44 3M167 96c-10 17-11 37-3 57M196 96c12 18 13 38 5 58M163 112l-29 13M201 113l26 18" class="ink-line"/>
-            <path d="M115 30c10-14 31-18 45-9 13 8 14 23 4 32-8 7-19 8-30 5l-12 9 3-15c-13-5-18-14-10-22z" class="bubble-fill"/>
-            <text x="128" y="43">Hi!</text>
-            <path d="M211 36c8-8 19-9 28-5 9 5 10 15 4 22-6 6-14 7-22 4l-8 6 2-10c-9-4-10-12-4-17z" class="bubble-fill blue"/>
-            <text x="219" y="47">Hey!</text>
-            <path d="M21 53l9-3 4-10 4 10 10 3-10 4-4 10-4-10zM231 92l6-2 2-6 3 6 6 2-6 3-3 6-2-6z" class="spark"/>
-          </svg>
-        </div>
-
-        <section class="planner paper-card">
-          <span class="corner-tag">STEP 01</span>
-          <div class="section-heading">
-            <div><span class="number-dot">1</span><h2>今天去哪儿练？</h2></div>
-            <p>选一个主题，或者写下你马上会遇到的场景。</p>
-          </div>
-          <div id="topics" class="topic-grid"></div>
-          <label class="custom-topic">
-            <span>我的自定义场景</span>
-            <input id="custom-topic" type="text" maxlength="60" placeholder="例如：在国外理发，想说明不要剪太短">
-          </label>
-
-          <div class="rule squiggle"></div>
-
-          <div class="section-heading compact">
-            <div><span class="number-dot coral">2</span><h2>你现在有多少时间？</h2></div>
-            <p id="time-description">完整走一遍场景，再处理一个小意外。</p>
-          </div>
-          <div id="duration-options" class="choice-row time-row" role="radiogroup" aria-label="练习时长"></div>
-
-          <div class="two-columns">
-            <fieldset>
-              <legend>我的程度</legend>
-              <div id="level-options" class="choice-row compact-row"></div>
-            </fieldset>
-            <fieldset>
-              <legend>中文辅助</legend>
-              <div id="hint-options" class="choice-row compact-row"></div>
-            </fieldset>
-          </div>
-
-          <button id="build-card" class="primary-button"><span>复制指令 · 生成预习卡</span><b>↗</b></button>
-          <p class="copy-help">复制后回到 ChatGPT，粘贴指令并开启语音通话；预习卡会在那里生成。</p>
-        </section>
-      </section>
-
-      <section id="review-view" class="view">
+      <section id="review-view" class="view active">
         <div class="review-header">
-          <div><span class="scribble-label mint">MY LITTLE WINS</span><h1>我的复习台</h1><p>不是错误收藏夹，是你已经走过的路。</p></div>
+          <div><span class="scribble-label mint">REVIEW, REPAIR, RETRY</span><h1>我的复习台</h1><p>对话里选主题；这里专心保存表现、整理纠正并安排复练。</p></div>
           <div class="review-stats">
             <div><b id="stat-sessions">0</b><span>次练习</span></div>
             <div><b id="stat-mastered">0</b><span>已掌握</span></div>
             <div><b id="stat-review">0</b><span>待复习</span></div>
           </div>
         </div>
+
+        <section class="archive-note paper-card">
+          <div><span class="number-dot">✓</span><div><h2>练完会自动归档</h2><p>Skill 会根据本次真实对话整理独立表达、需要提示的表达、重点纠正、下次重点和迁移练习。</p></div></div>
+          <button id="refresh-data" class="text-button" type="button">立即刷新 ↻</button>
+        </section>
+
         <div id="empty-review" class="empty-state paper-card">
           <span class="empty-face">◡̈</span>
           <h2>这里还很安静</h2>
-          <p>完成第一次口语练习后，学过的主题、表达和纠正都会在这里留下来。</p>
-          <button class="text-button" data-go-practice>去选今天的主题 →</button>
+          <p>直接回到对话开始一次口语练习。结束后无需在网页重复选择，归档会自动出现在这里。</p>
         </div>
         <div id="review-list" class="review-list"></div>
       </section>
     </main>
   </div>
-
-  <div id="toast" class="toast" role="status"></div>
   <script src="app.js"></script>
 </body>
 </html>

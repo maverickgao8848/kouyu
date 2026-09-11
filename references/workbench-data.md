@@ -1,6 +1,6 @@
 # Workbench data
 
-The workbench is a local, user-owned archive. Default to `english-speaking-workbench` under the active workspace; accept another location when requested.
+The workbench is a local, user-owned archive. Default to `english-speaking-workbench` in the learner's home directory; accept another location when requested, but use the same explicit directory for both archive and serve operations.
 
 ## Session JSON
 
@@ -47,11 +47,13 @@ Allowed target statuses are `mastered`, `developing`, `needs_review`, and `not_o
 Resolve the bundled script relative to the skill directory, not the learner's active workspace. Use:
 
 ```text
-python <skill-directory>/scripts/workbench.py init --data-dir <workbench>
-python <skill-directory>/scripts/workbench.py archive --input <session-json> --data-dir <workbench>
-python <skill-directory>/scripts/workbench.py serve --data-dir <workbench>
+python <skill-directory>/scripts/workbench.py init
+python <skill-directory>/scripts/workbench.py archive --input <session-json>
+python <skill-directory>/scripts/workbench.py serve
 ```
+
+To store the workbench elsewhere, pass the same explicit `--data-dir <workbench>` to every command.
 
 The archive command validates required fields, writes an individual session file, updates `workbench-data.json` atomically, and regenerates `复习台.md`. Never overwrite an existing session with a different payload; generate a new id instead.
 
-The UI reads the same `workbench-data.json` through the local server. The learner uses the dashboard to configure a new session and, with one click, copy the resulting Skill prompt. Do not render a separate local preparation card: the copied prompt asks the Skill to generate the canonical preparation card in ChatGPT before role-play. The UI does not claim to initiate a voice call by itself.
+The UI is a review-only dashboard. Topic, duration, level, and hint mode are chosen in the conversation, not configured again in the browser. While open, the dashboard periodically reloads `workbench-data.json` so a newly archived session appears without restarting the server. It summarizes current target status, natural repairs, next-focus items, and the transfer drill; it never edits the source session history.

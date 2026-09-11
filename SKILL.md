@@ -1,7 +1,6 @@
 ---
 name: kouyu
 description: Run guided English speaking practice with scenario preparation, Chinese intent hints, gentle correction, mastery-aware reports, and a persistent review workbench. Use when a learner wants to prepare for, start, continue, finish, or review an English role-play session.
-compatibility: Self-contained skill. Python 3.10+ is needed only for local workbench persistence and its browser UI; conversational practice has no external runtime dependency.
 ---
 
 # Kouyu
@@ -45,9 +44,9 @@ Correct only errors that block understanding, recur, or directly concern the les
 
 ## Finish and save
 
-When the learner says **“Let's wrap up.”** or otherwise clearly asks to stop, acknowledge once, leave the role immediately, and enter the report without asking for another in-character response. Organize what the learner actually said against correct, natural English: preserve wording that already works, repair wording that needs improvement, and explain the important difference briefly. Distinguish independent use from prompted or imitated use. Never claim a pronunciation finding from text alone. Save the structured result to the workbench when local file access is available, unless the learner opts out.
+When the learner says **“Let's wrap up.”** or otherwise clearly asks to stop, acknowledge once, leave the role immediately, and enter the report without asking for another in-character response. Organize what the learner actually said against correct, natural English: preserve wording that already works, repair wording that needs improvement, and explain the important difference briefly. Distinguish independent use from prompted or imitated use. Never claim a pronunciation finding from text alone. Save the structured result to the workbench when local file access is available, unless the learner opts out. Build the archive from evidence in the completed conversation: include the learner's actual wording, natural repairs, target status and support level, up to three `focus_next` items, and one short `next_drill`. Do not merely print the JSON for the learner to manage. Write it to a temporary file, execute the archive command, and confirm that the workbench was updated.
 
-The local workbench defaults to `english-speaking-workbench` in the current workspace. Resolve the bundled script relative to this skill directory, then run `python <skill-directory>/scripts/workbench.py archive --input <session.json> --data-dir <directory>` for deterministic storage. Run `python <skill-directory>/scripts/workbench.py serve --data-dir <directory>` to open the hand-drawn review UI.
+The local workbench defaults to `english-speaking-workbench` in the learner's home directory so `archive` and `serve` find the same history regardless of the active workspace. Resolve the bundled script relative to this skill directory, then run `python <skill-directory>/scripts/workbench.py archive --input <session.json>` for deterministic storage. Run `python <skill-directory>/scripts/workbench.py serve` to open the review-only UI. Pass the same explicit `--data-dir <directory>` to both commands only when the learner requests another location.
 
 ## Interaction principles
 

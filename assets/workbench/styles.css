@@ -178,8 +178,26 @@ legend { margin-bottom: 11px; font: 700 12px "Segoe Print", "Microsoft YaHei", c
 .review-meta { color: var(--muted); font-size: 11px; margin: 7px 0 16px; }
 .target-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .target-tag { border: 1.4px solid var(--ink); border-radius: 13px 9px; padding: 5px 9px; background: #dceee3; font-size: 10px; }
+.target-tag small { display: block; margin-top: 2px; color: var(--muted); font-size: 8px; }
 .target-tag.review { background: #fde0d8; }
 .target-tag.developing { background: #fff0b8; }
+.archive-note { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 28px; padding: 20px 24px; background: linear-gradient(120deg, rgba(255,244,201,.94), rgba(220,238,227,.9)); }
+.archive-note > div { display: flex; align-items: center; gap: 14px; }
+.archive-note h2 { margin: 0 0 4px; font: 800 17px "Segoe Print", "Microsoft YaHei", cursive; }
+.archive-note p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+.review-detail { margin-top: 18px; padding-top: 15px; border-top: 1px dashed rgba(37,35,31,.28); }
+.review-detail h3 { margin: 0 0 10px; font: 800 12px "Segoe Print", "Microsoft YaHei", cursive; }
+.repair-list { display: grid; gap: 10px; }
+.repair-item { padding: 12px 14px; background: rgba(255,255,255,.5); border-left: 4px solid var(--coral); }
+.repair-item p { margin: 0 0 5px; font-size: 12px; line-height: 1.55; }
+.repair-item p span { display: inline-block; min-width: 54px; color: var(--muted); font-size: 9px; font-weight: 800; }
+.repair-item .natural { color: #27664a; font-weight: 700; }
+.repair-item small { display: block; margin-left: 54px; color: var(--muted); font-size: 9px; }
+.focus-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.focus-list span { padding: 6px 10px; border: 1.3px solid var(--ink); background: #fff0b8; font-size: 10px; }
+.next-drill { margin-top: 17px; padding: 13px 15px; background: #dceee3; border: 1.5px solid var(--ink); }
+.next-drill b { font: 800 11px "Segoe Print", "Microsoft YaHei", cursive; }
+.next-drill p { margin: 5px 0 0; font-size: 12px; line-height: 1.55; }
 .toast { position: fixed; z-index: 20; right: 25px; bottom: 24px; background: var(--ink); color: #fff; border: 2px solid #fff; box-shadow: 4px 4px 0 var(--coral); padding: 12px 18px; font-size: 12px; transform: translateY(100px); opacity: 0; transition: .25s ease; }
 .toast.show { transform: translateY(0); opacity: 1; }
 
@@ -190,6 +208,7 @@ legend { margin-bottom: 11px; font: 700 12px "Segoe Print", "Microsoft YaHei", c
   .hero { grid-template-columns: 1fr; }.hero-doodle { display: none; }
   .topic-grid { grid-template-columns: repeat(3,1fr); }
   .review-header { align-items: flex-start; gap: 20px; flex-direction: column; }
+  .archive-note { align-items: flex-start; flex-direction: column; }
 }
 @media (max-width: 560px) {
   .brand small,.eyebrow { display: none; }.nav-item { font-size: 0; padding: 9px 12px; }.nav-item span { font-size: 17px; margin: 0; }
