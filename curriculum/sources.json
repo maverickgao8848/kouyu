@@ -1,0 +1,38 @@
+[
+  {
+    "id": "en-everyday-conversations",
+    "title": "Everyday Conversations: Learning American English",
+    "language": "en",
+    "scope": "english_kouyu",
+    "publisher": "U.S. Department of State",
+    "url": "https://americanenglish.state.gov/resources/everyday-conversations-learning-american-english",
+    "license": "Public domain U.S. federal work (text; third-party media, if any, excluded)",
+    "usage": "direct_adaptation",
+    "attribution_required": false,
+    "verification_status": "verified_federal_work"
+  },
+  {
+    "id": "en-green-tea",
+    "title": "Green Tea Intermediate English Communication OER",
+    "language": "en",
+    "scope": "english_kouyu",
+    "publisher": "Portland Community College / Open Oregon Educational Resources",
+    "url": "https://openoregon.pressbooks.pub/greentea/",
+    "license": "CC BY 4.0 (except where otherwise noted)",
+    "usage": "direct_adaptation",
+    "attribution_required": true,
+    "verification_status": "verified_official"
+  },
+  {
+    "id": "en-communication-beginnings",
+    "title": "Communication Beginnings",
+    "language": "en",
+    "scope": "english_kouyu",
+    "publisher": "Portland State University",
+    "url": "https://pdx.pressbooks.pub/communicationbeginningsanintroductory/",
+    "license": "CC BY-NC 4.0",
+    "usage": "reference_only",
+    "attribution_required": true,
+    "verification_status": "verified_official"
+  }
+]

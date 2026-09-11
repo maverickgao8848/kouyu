@@ -2,12 +2,14 @@
 
 Use this guide to create a preparation card that can actually be rehearsed in the available time.
 
+When grounding a card in published learning material, follow the source permissions in `../curriculum/sources.json`. English lessons may use `english_kouyu` sources only. A `reference_only` source can inform difficulty, naturalness, or activity design but cannot supply copied dialogue, instructions, or a directly adapted target list.
+
 ## Required inputs
 
 - Topic: one of the topic bank entries or a learner-created situation.
 - Duration: 5, 10, 20, 40, or a custom number of minutes.
 - Level: beginner, intermediate, or advanced.
-- Hint mode: immersion, guided, or learning.
+- Hint mode: `immersion`（先独立表达、仅在需要时帮忙）, `guided`（默认；目标处给中文意图提示）, or `learning`（更早给提示与关键词/句型）。The mode changes support timing and amount, not lesson difficulty or material volume.
 - Optional personal objective: an upcoming trip, meeting, interview, or recurring difficulty.
 
 ## Scale by time

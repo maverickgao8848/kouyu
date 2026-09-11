@@ -1,6 +1,7 @@
 ---
 name: kouyu
 description: Run guided English speaking practice with scenario preparation, Chinese intent hints, gentle correction, mastery-aware reports, and a persistent review workbench. Use when a learner wants to prepare for, start, continue, finish, or review an English role-play session.
+compatibility: Self-contained skill. Python 3.10+ is needed only for local workbench persistence and its browser UI; conversational practice has no external runtime dependency.
 ---
 
 # Kouyu
@@ -10,6 +11,7 @@ Turn short pockets of time into a complete speaking loop: choose, preview, role-
 ## Route the request
 
 - For a new session or preparation card, read [references/lesson-design.md](references/lesson-design.md).
+- When selecting or adapting English learning material, read [curriculum/README.md](curriculum/README.md) and use only sources whose scope is `english_kouyu`. Do not pull the multilingual sample packs into this English skill.
 - Before starting or continuing role-play, read [references/session-protocol.md](references/session-protocol.md).
 - When the learner stops, requests feedback, or finishes a timed session, read [references/reporting.md](references/reporting.md).
 - When saving, retrieving, or reviewing progress, read [references/workbench-data.md](references/workbench-data.md).
@@ -20,7 +22,12 @@ Collect only missing choices: topic, approximate duration, level, and hint mode.
 
 - duration: 5, 10, 20, or 40 minutes
 - level: beginner, intermediate, or advanced
-- hint mode: immersion, guided, or learning
+- hint mode: use the following explanation whenever asking the learner to choose:
+  - `immersion`（沉浸式）：尽量像真实对话一样只用英语推进；先不给中文提示或句型，只有卡住、听不懂或明确求助时才逐级帮忙。适合想模拟实战、检验自己能否自然开口的人。
+  - `guided`（引导式，默认）：仍以英语对话为主；练习目标出现时，会附一条中文“表达意思”的提示，避免直接给出答案。适合大多数人：既要开口，也希望不至于频繁卡住。
+  - `learning`（学习式）：会更早给中文意图提示，并可较快补充英语关键词或半句句型；完整范句仍只在需要或请求时提供。适合刚接触主题、词汇不足，或想边练边学表达的人。
+
+All three modes use the same topic, difficulty level, and review standard. They differ only in how early and how much support is offered during the conversation.
 
 Accept custom topics and durations. Infer an appropriate level from the learner's language only when they prefer not to choose. Do not delay a well-specified request with more questions.
 
