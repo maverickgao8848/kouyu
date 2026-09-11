@@ -14,16 +14,16 @@ When grounding a card in published learning material, follow the source permissi
 
 ## Scale by time
 
-Build a visibly richer card as time increases. The three material types below are minimums, not a combined target count. A target tracked during role-play may be a word, phrase, or sentence pattern.
+Build a visibly richer card as time increases. The three material types below are separate minimums, not a combined target count. The vocabulary bank is deliberately much larger because it prepares the learner to recognize options and make real-world choices; only a smaller active subset needs to be elicited and tracked during role-play.
 
 | Time | Key words | Phrases | Sentence patterns | Scene shape | Challenge |
 |---|---:|---:|---:|---|---|
-| 5 min | 2–3 | 2 | 1 | one essential task | use 2 items |
-| 10 min | 4–5 | 3–4 | 2 | one complete exchange | use 4 items |
-| 20 min | 6–8 | 5–6 | 3–4 | main task plus one complication | use 6 items |
-| 40 min | 8–12 | 7–10 | 5–7 | multi-stage scene with two complications | use 9 items and transfer 2 |
+| 5 min | 15 | 3 | 2 | one essential task | use 2 active items |
+| 10 min | 20 | 5 | 3 | one complete exchange | use 4 active items |
+| 20 min | 30 | 8 | 5 | main task plus one complication | use 6 active items |
+| 40 min | 40 | 12 | 8 | multi-stage scene with two complications | use 9 active items and transfer 2 |
 
-For a custom duration, interpolate conservatively. Fewer well-rehearsed targets are better than a crowded card.
+For a custom duration, interpolate between the rows and never go below 15 key words. Keep the active practice target set selective even when the recognition vocabulary bank is large.
 
 ## Scale by level
 
@@ -51,12 +51,14 @@ When offering choices, show 10–12 varied candidates rather than only broad cat
 
 Custom scenes must have a plausible counterpart, a concrete mission, and at least one decision or information gap.
 
+Build vocabulary for practical coverage, not merely to hit a number. For a café card, for example, cover common drink types, hot/iced, sizes, milk and sweetener options, strength or extra shots, dine-in/takeaway, and payment or pickup terms. Apply the same breadth test to other scenes: include the main things, actions, properties, options, and likely problems the learner may need to recognize or choose between. Avoid near-duplicates and do not count inflected forms of the same word as separate vocabulary items.
+
 ## Preparation card
 
 Present:
 
 1. Scene, roles, and mission.
-2. **Key words:** topic-specific nouns, verbs, or technical terms with concise Chinese meanings. Prefer concrete domain vocabulary over generic conversational words.
+2. **Key words:** the full duration-scaled recognition bank of topic-specific nouns, verbs, adjectives, or technical terms with concise Chinese meanings. Prefer concrete domain vocabulary over generic conversational words.
 3. **Phrases/collocations:** reusable chunks with concise Chinese meanings.
 4. **Sentence patterns:** complete, natural example sentences that demonstrate how the words and phrases work in context. Do not merely repeat a phrase with punctuation.
 5. Two or three likely questions for 5–10 minutes; four to six for 20–40 minutes.
